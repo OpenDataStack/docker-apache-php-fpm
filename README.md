@@ -21,7 +21,7 @@ Pull from docker hub and run:
 ```
 docker pull opendatastack/apache-php-fpm;
 docker run \
--p 8989:80 \
+-p 8787:80 \
 --name apache-php-fpm opendatastack/apache-php-fpm;
 ```
 
