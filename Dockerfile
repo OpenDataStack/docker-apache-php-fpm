@@ -22,6 +22,7 @@ RUN apt-get update \
         apache2 \
         php-fpm php7.0-mysql php7.0-xml php7.0-gd php7.0-mbstring php7.0-bcmath php-memcache \
         php7.0-curl \
+        php-xdebug \
     # Configure Apache + PHP
     && a2enconf php7.0-fpm \
     && a2enmod proxy \
@@ -47,6 +48,7 @@ COPY ./config/apache/000-default.conf /etc/apache2/sites-available/000-default.c
 # PHP Configuration
 COPY config/php/fpm/php.ini /etc/php/7.0/fpm/php.ini
 COPY config/php/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+COPY config/php/fpm/xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
 
 # Startup script to change uid/gid (if environment variable passed) and start supervisord in foreground
 COPY ./scripts/start.sh /start.sh
