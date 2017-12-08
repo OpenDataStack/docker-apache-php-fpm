@@ -11,6 +11,8 @@ RUN apt-get update \
         curl \
         ca-certificates \
         nano \
+        zip \
+        git \
     # Supervisor
     && apt-get -y --no-install-recommends install \
         supervisor \
