@@ -12,6 +12,7 @@ RUN apt-get update \
         ca-certificates \
         nano \
         zip \
+        unzip \
         git \
     # Supervisor
     && apt-get -y --no-install-recommends install \
@@ -22,7 +23,7 @@ RUN apt-get update \
     # Install Apache + PHP
     && apt-get -y --no-install-recommends install \
         apache2 \
-        php-fpm php7.0-mysql php7.0-xml php7.0-gd php7.0-mbstring php7.0-bcmath php-memcache \
+        php-fpm php7.0-mysql php7.0-xml php7.0-gd php7.0-mbstring php7.0-bcmath php7.0-zip php-memcache \
         php7.0-curl \
         php-xdebug \
     # Configure Apache + PHP
@@ -37,7 +38,12 @@ RUN apt-get update \
 RUN curl -sf -o /usr/bin/composer -L https://getcomposer.org/download/1.5.5/composer.phar \
     && chmod +x /usr/bin/composer \
     && curl -sf -o /usr/bin/drush -L https://github.com/drush-ops/drush/releases/download/8.1.15/drush.phar \
-    && chmod +x /usr/bin/drush
+    && chmod +x /usr/bin/drush \
+    && curl https://drupalconsole.com/installer -L -o /usr/bin/drupal \
+    && chmod +x /usr/bin/drupal \
+    # Composer & Drush & Drupal Console need write access to www-data home
+    # TODO refactor and replace with access user
+    && chown www-data:www-data /var/www
 
 # Supervisor
 RUN mkdir -p /run/php/
